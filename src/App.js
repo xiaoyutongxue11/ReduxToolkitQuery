@@ -1,23 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import { useGetStudentsQuery } from "./store/studentApi";
+import StudentList from "./Components/StudentList/StudentList";
 function App() {
+  const { data, isError, isLoading, isSuccess } = useGetStudentsQuery();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {isLoading && <p>正在加载</p>}
+      {isError && <p>请求出错</p>}
+      {isSuccess && (
+        <div>
+          <StudentList stus={data.data}/>
+        </div>
+      )}
     </div>
   );
 }
